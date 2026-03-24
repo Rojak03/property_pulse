@@ -1,6 +1,6 @@
 import connectDB from "@/config/database";
 import Property from "@/models/Property";
-
+import { getSessionuser } from "@/utils/getSessionUser";
 //GET /api/properties
 export const GET = async (request) => {
   try {
@@ -21,6 +21,13 @@ export const GET = async (request) => {
 //POST /api/properties
 export const POST = async (request) => {
   try {
+    await connectDB();
+    //get current user
+    const sessionUser = await getSessionuser();
+    if (!sessionUser || !sessionUser.userId) {
+      return new Response("User ID is required", { status: 401 });
+    }
+    const { userId } = sessionUser;
     const formData = await request.formData();
     // access all vaules from amneities and images
     const amenities = formData.getAll("amenities");
@@ -52,7 +59,6 @@ export const POST = async (request) => {
       },
       owner: userId,
     };
-    await connectDB;
   } catch (error) {
     return new Response("Failed to post property", {
       stauts: 500,
