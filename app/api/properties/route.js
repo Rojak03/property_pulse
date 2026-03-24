@@ -31,7 +31,9 @@ export const POST = async (request) => {
     const formData = await request.formData();
     // access all vaules from amneities and images
     const amenities = formData.getAll("amenities");
-    const images = formData.getAll(images).filter((image) => image.name !== "");
+    const images = formData
+      .getAll("images")
+      .filter((image) => image.name !== "");
     //Create property Data object for database
     const propertyData = {
       type: formData.get("type"),
@@ -59,7 +61,14 @@ export const POST = async (request) => {
       },
       owner: userId,
     };
+    const newProperty = new Property(propertyData);
+    await newProperty.save();
+
+    return Response.redirect(
+      `${process.env.NEXTAUTH_URL}/properties/${newProperty._id}`,
+    );
   } catch (error) {
+    console.log(error);
     return new Response("Failed to post property", {
       stauts: 500,
     });
