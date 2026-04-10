@@ -75,7 +75,8 @@ const PropertyDetails = ({ property }) => {
           </p>
           <p>
             <FaRulerCombined className="inline-block mr-2" />
-            {property.squre_feet} <span className="hidden sm:inline">sqft</span>
+            {property.square_feet}{" "}
+            <span className="hidden sm:inline">sqft</span>
           </p>
         </div>
         <p className="text-center text-gray-500 mb-4">{property.description}</p>
