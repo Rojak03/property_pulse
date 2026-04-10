@@ -8,7 +8,7 @@ const PropertyHeaderImage = ({ image }) => {
           <Image
             src={image}
             alt={`${image}`}
-            className="object-cover h-[400px] w-full"
+            className="object-cover h-100 w-full"
             width={0}
             height={0}
             sizes="100vw"
